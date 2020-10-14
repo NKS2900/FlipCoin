@@ -1,10 +1,32 @@
-#!/bin/bash
+#!/bin/bash -x
 
-random=$((RANDOM%2))
+echo "welcome"
+echo -e "Entert= the no of time you want to flip coin : \c" 
+read number
+echo -e "how many coins :\c"
+coins=3
+declare -A dictionary
+H=0
+T=0
 
-if [ $random -eq 1 ]
-then
-	 echo "Head"
-else
-	echo "tail"
-fi
+function coin() {
+for (( i=1; i<=$number; i++ ))
+do
+str=""
+ for(( j=0; j<$coins; j++ ))
+ do
+   random=$(( RANDOM % 2 ))
+	if [ $random -eq 1 ]
+	then
+	   str=$str"H"
+	else
+            str=$str"T"
+	fi
+  done
+echo coins : $str
+dictionary["$str"]=$(( ${dictionary["$str"]} + 1 ))
+done
+}
+
+coin
+echo "${!dictionary[@]} : ${dictionary[@]}"
